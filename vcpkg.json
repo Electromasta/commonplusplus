@@ -3,12 +3,22 @@
     "version": "1.0.0",
     "port-version": 0,
     "description": "Commonly used Std Extensions Library for C++",
-    "homepage": "https://github.com/Electromasta/Common-Plus-Plus",
+    "homepage": "https://git.cranberry-box.com/lewisb3/commonplusplus",
     "license": "MIT",
+    "builtin-baseline": "256acc64012b23a13041d8705805e1f23b43a024",
     "dependencies": [
+        { "name": "fmt" },
         { "name": "spdlog" },
-        { "name": "glm" },
-        { "name": "tomlplusplus" },
-        { "name": "reflectcpp", "features": ["toml"] }
-    ]
+        { "name": "glm" }
+    ],
+    "features": {
+        "reflect": {
+            "description": "reflect-cpp glue: glm, String16 and Bitset reflectors, toml/msgpack",
+            "dependencies": [ { "name": "reflectcpp", "features": ["toml", "msgpack"] } ]
+        },
+        "experimental": {
+            "description": "Dependencies of the parked experimental/ headers (development only)",
+            "dependencies": [ "magic-enum", "concurrentqueue" ]
+        }
+    }
 }

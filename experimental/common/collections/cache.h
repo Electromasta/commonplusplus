@@ -1,5 +1,6 @@
 #pragma once
 #include "common/core.types.h"
+#include "common/memory.types.h"
 #include "common/logging.types.h"
 #include <typeindex>
 #include <typeinfo>
@@ -23,8 +24,8 @@ namespace Common  {
             }
 
             void add(const String & name, T item)  {
-                if (cache.contains(name)) { Log::warn("Reassigning: {}", name); }
-                cache.insert_or_assign(name, std::move(item));
+                if (cache.contains(name)) { Log::warn("Reassigning: {}", name); cache.erase(name); }
+                cache.emplace(name, std::move(item));
             }
 
             void flush() { cache.clear(); }

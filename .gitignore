@@ -50,3 +50,4 @@ _external
 !src/_external
 _bld
 _bin
+compile_commands.json
