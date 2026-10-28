@@ -1,5 +1,9 @@
 #pragma once
 #include "common/core.types.h"
+#include <bitset>
+
+template<size_t N>
+using Bitset = std::bitset<N>;
 
 namespace Bitmask   {
     constexpr u8 ONE = 0x1u;

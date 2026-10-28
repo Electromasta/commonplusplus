@@ -1,27 +1,37 @@
 #pragma once
-#include "common/core.types.h"
+#include <unordered_map>
+#include <utility>
 
-namespace Common  {
+namespace common  {
     template <typename A, typename B>
-    class BidirectionalMap {
+    class bimap {
         public:
-            void insert(const A & a, const B & b)   {
+            const A NONE_A = {};
+            const B NONE_B = {};
+
+            bimap() = default;
+            explicit bimap(A nonea, B noneb) : NONE_A(std::move(nonea)), NONE_B(std::move(noneb)) {};
+            ~bimap() = default;
+
+            bool insert(const A & a, const B & b)   {
+                if (a == NONE_A || b == NONE_B) return false;
                 if (abMap.count(a)) {   baMap.erase(abMap[a]);  }
                 if (baMap.count(b)) {   abMap.erase(baMap[b]);  }
                 abMap[a] = b;
                 baMap[b] = a;
+                return true;
             }
 
-            Optional<A> getA(const B & b) const {
+            const A & getA(const B & b) const {
                 auto ba = baMap.find(b);
                 if (ba != baMap.end()) return ba->second;
-                return std::nullopt;
+                return NONE_A;
             }
 
-            Optional<B> getB(const A & a) const {
+            const B & getB(const A & a) const {
                 auto ab = abMap.find(a);
                 if (ab != abMap.end()) return ab->second;
-                return std::nullopt;
+                return NONE_B;
             }
 
             bool containsA(const A & a) const {
@@ -59,7 +69,13 @@ namespace Common  {
                 baMap.clear();
             }
         private:
-            Hashmap<A, B> abMap;
-            Hashmap<B, A> baMap;
+            std::unordered_map<A, B> abMap;
+            std::unordered_map<B, A> baMap;
     };
 }
+
+template<typename T, typename U>
+using BidirectionalMap = common::bimap<T, U>;
+
+template<typename T, typename U>
+using BiMap = common::bimap<T, U>;

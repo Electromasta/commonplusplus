@@ -1,53 +1,29 @@
 #pragma once
-#define GLM_ENABLE_EXPERIMENTAL
-#include <rfl.hpp>
+#ifndef GLM_ENABLE_EXPERIMENTAL
+    #define GLM_ENABLE_EXPERIMENTAL
+#endif
+#ifndef GLM_FORCE_SWIZZLE
+    #define GLM_FORCE_SWIZZLE
+#endif
 #include <glm/glm.hpp>
 #include <glm/gtx/hash.hpp>
 
-// AI Generated
+namespace glm {
+    inline bool ab(const float & minA, const float & maxA, const float & minB, const float & maxB)   {
+        return maxA >= minB && maxB >= minA;
+    }
 
-namespace rfl {
+    inline bool aabb(const vec2 & minA, const vec2 & maxA, const vec2 & minB, const vec2 & maxB)   {
+        return all(greaterThanEqual(maxA, minB)) &&
+               all(greaterThanEqual(maxB, minA));
+    }
 
-    template <>
-    struct Reflector<glm::vec2> {
-        struct ReflType { float x, y; };
-        static ReflType from(const glm::vec2& v) { return { v.x, v.y }; }
-        static glm::vec2 to(const ReflType& r) { return { r.x, r.y }; }
-    };
+    inline bool aaabbb(const vec3 & minA, const vec3 & maxA, const vec3 & minB, const vec3 & maxB)   {
+        return all(greaterThanEqual(maxA, minB)) &&
+               all(greaterThanEqual(maxB, minA));
+    }
 
-    template <>
-    struct Reflector<glm::vec3> {
-        struct ReflType { float x, y, z; };
-        static ReflType from(const glm::vec3& v) { return { v.x, v.y, v.z }; }
-        static glm::vec3 to(const ReflType& r) { return { r.x, r.y, r.z }; }
-    };
-
-    template <>
-    struct Reflector<glm::vec4> {
-        struct ReflType { float x, y, z, w; };
-        static ReflType from(const glm::vec4& v) { return { v.x, v.y, v.z, v.w }; }
-        static glm::vec4 to(const ReflType& r) { return { r.x, r.y, r.z, r.w }; }
-    };
-
-    template <>
-    struct Reflector<glm::ivec2> {
-        struct ReflType { int x, y; };
-        static ReflType from(const glm::ivec2& v) { return { v.x, v.y }; }
-        static glm::ivec2 to(const ReflType& r) { return { r.x, r.y }; }
-    };
-
-    template <>
-    struct Reflector<glm::ivec3> {
-        struct ReflType { int x, y, z; };
-        static ReflType from(const glm::ivec3& v) { return { v.x, v.y, v.z }; }
-        static glm::ivec3 to(const ReflType& r) { return { r.x, r.y, r.z }; }
-    };
-
-    template <>
-    struct Reflector<glm::ivec4> {
-        struct ReflType { int x, y, z, w; };
-        static ReflType from(const glm::ivec4& v) { return { v.x, v.y, v.z, v.w }; }
-        static glm::ivec4 to(const ReflType& r) { return { r.x, r.y, r.z, r.w }; }
-    };
-
+    inline bool hover(const vec2 & point, const vec2 & min, const vec2 & max) {
+        return aabb(point, point, min, max);
+    }
 }

@@ -1,10 +1,9 @@
 #pragma once
-#include "common/core.types.h"
-#include "common/logging.types.h"
+#include <string>
 
-namespace Common  {
-    String cxxversion() {
-        String version;
+namespace common  {
+    inline std::string cxxversion() {
+        std::string version;
         
         #if __cplusplus == 202302L
             version = "C++23";
@@ -37,4 +36,8 @@ namespace Common  {
         
         return version;
     }
+}
+
+namespace Fn {
+    using common::cxxversion;
 }
