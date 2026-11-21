@@ -1,7 +1,7 @@
 #pragma once
 #include "common/core.types.h"
 #include "common/math.types.h"
-#include "realm/gen/noise/hash.fn.h"
+#include "common/functions/hash.fn.h"
 #include <bit>
 #include <cassert>
 #include <span>
